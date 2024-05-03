@@ -9,6 +9,15 @@ const messages =
 
 export default function App()
 {
+  return (
+  <div>
+    <Steps />
+  </div>
+  )
+}
+
+ function Steps()
+{
   //useState only available at the top level
   const [step, SetStep] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
@@ -24,8 +33,8 @@ export default function App()
   }
 
   return (
-    <>
-    <button className="close" onClick={()=>setIsOpen(is => !is)}>  &times; </button>
+    <div>
+      <button className="close" onClick={()=>setIsOpen(is => !is)}>  &times; </button>
       {
         isOpen &&
         (<div className="steps">
@@ -49,6 +58,6 @@ export default function App()
           </div>
         </div>)
       }   
-    </>
+    </div>
   )
 }
