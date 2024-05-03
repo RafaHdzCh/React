@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client"
+import "./index.css";
 
 const pizzaData = [
   {
@@ -50,24 +51,61 @@ const pizzaData = [
 function App()
 {
   return (
-  <div>
-    <h1> Hello React! </h1>
-    <Pizza />
-    <Pizza />
-    <Pizza />
+  <div className="container">
+    <Header />
+    <Menu />
+    <Footer />
   </div>
   );
 }
 
-function Pizza()
+function Header()
+{
+  return <header className="header"><h1 style={{}}> Fast React Pizza Co. </h1> </header>
+}
+
+function Menu()
+{
+  return( 
+    <main className="menu"> 
+      <h2> Our menu </h2>
+      <Pizza 
+        name ="Pizza Name" 
+        ingredients="These are the ingredients" 
+        photoName="pizzas/spinaci.jpg"
+        price={12}
+      />
+
+      <Pizza 
+        name ="Pizza Funghi" 
+        ingredients="Tomatos Fungi mushorroms" 
+        photoName="pizzas/funghi.jpg"
+        price={10}
+      />
+
+    </main>
+  )
+}
+
+function Pizza(props)
 {
   return (
-  <div>
-    <h2> Secret Pizza </h2>
-    <img src = "pizzas/spinaci.jpg" alt="Pizza"/>
-    <p>Tomato, mozarella, spinach, and ricotta cheese </p>
+  <div className="pizza">
+    <img src= {props.photoName} alt= {props.name} />
+    <div>
+      <h2> {props.name} </h2>
+      <p> {props.ingredients} </p>
+      <span> ${props.price} </span>
+    </div>
   </div>) 
 }
+
+function Footer()
+{
+  return <footer className="footer"> We're open from 10:00am to 10:00pm </footer>
+}
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
