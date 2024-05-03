@@ -15,17 +15,17 @@ export default function App()
 
   function HandlePrevious()
   {
-    if(step > 1) SetStep(step-1);
+    if(step > 1) SetStep((currentStep) => currentStep-1);
   }
 
   function HandleNext()
   {
-    if(step < 3) SetStep(step+1);
+    if(step < 3) SetStep((currentStep) => currentStep+1);
   }
 
   return (
     <>
-    <button className="close" onClick={()=>setIsOpen(!isOpen)}>  &times; </button>
+    <button className="close" onClick={()=>setIsOpen(is => !is)}>  &times; </button>
       {
         isOpen &&
         (<div className="steps">
