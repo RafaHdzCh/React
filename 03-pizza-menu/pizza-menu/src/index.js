@@ -88,25 +88,29 @@ function Menu()
   )
 }
 
-function Pizza(props)
+function Pizza({pizzaObj})
 {
   return (
   <li className="pizza">
-    <img src= {props.pizzaObj.photoName} alt= {props.pizzaObj.name} />
+    <img src= {pizzaObj.photoName} alt= {pizzaObj.name} />
     <div>
-      <h2> {props.pizzaObj.name} </h2>
-      <p> {props.pizzaObj.ingredients} </p>
-      <span> ${props.pizzaObj.price} </span>
+      <h2> {pizzaObj.name} </h2>
+      <p> {pizzaObj.ingredients} </p>
+      <span> ${pizzaObj.price} </span>
     </div>
   </li>) 
 }
 
 function Footer()
 {
-  return <footer className="footer"> We're open from 10:00am to 10:00pm </footer>
+  return (
+  <div className="order">
+    <footer className="footer"> 
+      <p> We're open from 10:00am to 10:00pm </p>
+    </footer>
+    <button className="btn"> Order </button>
+  </div>)
 }
-
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
