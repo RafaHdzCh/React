@@ -66,16 +66,27 @@ function Header()
 
 function Menu()
 {
+  const amountOfDishes = pizzaData.length;
+
   return( 
     <main className="menu"> 
-      <h2> Our menu </h2>
-      <ul className="pizzas">
-        {
-          pizzaData.map(pizza => 
-          <Pizza pizzaObj={pizza} key={pizza.name}/>)
-        }
-      </ul>
-
+      {amountOfDishes > 0 ? 
+      (
+        <React.Fragment>
+          <h2> Our menu </h2>
+          <p> Authentic Italian cuisine. Creative dishes to choose from. All from our stone oven, all organic, all delicious. </p>
+          <ul className="pizzas">
+            {
+              pizzaData.map(pizza => 
+              <Pizza pizzaObj={pizza} key={pizza.name}/>)
+            }
+          </ul>
+        </React.Fragment>
+      ) 
+      : 
+      (
+        <p> We are still working on our menu...</p>
+      )}
       {
       /*<Pizza 
         name ="Pizza Name" 
@@ -91,12 +102,18 @@ function Menu()
 function Pizza({pizzaObj})
 {
   return (
-  <li className="pizza">
+  <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
     <img src= {pizzaObj.photoName} alt= {pizzaObj.name} />
     <div>
-      <h2> {pizzaObj.name} </h2>
-      <p> {pizzaObj.ingredients} </p>
-      <span> ${pizzaObj.price} </span>
+      <h2> 
+        {pizzaObj.name} 
+      </h2>
+      <p> 
+        {pizzaObj.ingredients} 
+      </p>
+      <span> 
+      {pizzaObj.soldOut ? "SOLD OUT" : `$ ${pizzaObj.price}`}
+      </span>
     </div>
   </li>) 
 }
