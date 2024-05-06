@@ -5,6 +5,7 @@ export default function App()
   //#region Shared State
 
   const [items, SetItems] = useState([]);
+
   function HandleAddItems(item)
   {
     SetItems(items=> [...items, item]);
@@ -33,7 +34,9 @@ export default function App()
       OnDeleteItem={HandleDeleteItem} 
       OnToggleItem={HandleToggleItem}
     />
-    <Stats/>
+    <Stats 
+      items={items} 
+    />
   </div>
 )
 };
@@ -125,11 +128,29 @@ function Item({item, OnDeleteItem, OnToggleItem})
   </li>)
 }
 
-function Stats()
+function Stats({items})
 {
+  const numberOfItems = items.length;
+
+  if(!numberOfItems) return(
+    <p className="stats"> 
+      <em>
+        Start Adding some items!
+      </em>
+    </p>
+  );
+  
+  const numerOfPackedItems = items.filter(item => item.packed).length;
+  const percentage = (numerOfPackedItems/numberOfItems)*100; 
+
   return (
   <footer className="stats">
-    You have X items on your list, and you already packed Y(X%)
+    <em>
+      {numerOfPackedItems === numberOfItems ? 
+      "You got everything! Ready to go!" 
+      : 
+      `You have ${numberOfItems} items on your list, and you already packed ${numerOfPackedItems}(${Math.round(percentage)}%)`}      
+    </em>
   </footer>
   )
 }
