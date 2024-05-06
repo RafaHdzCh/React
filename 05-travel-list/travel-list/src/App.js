@@ -12,7 +12,12 @@ export default function App()
 
   function HandleDeleteItem(id)
   {
-    SetItems(items => items.filter(item=>item.id !== id))
+    SetItems(items => items.filter(item=>item.id !== id));
+  }
+
+  function HandleToggleItem(id)
+  {
+    SetItems(items => items.map(item => item.id === id ? {...item, packed: !item.packed} : item));
   }
 
   //#endregion
@@ -20,8 +25,14 @@ export default function App()
   return(
   <div className="app">
     <Logo/>
-    <Form OnAddItems={HandleAddItems}/>
-    <PackingList items={items} OnDeleteItem={HandleDeleteItem}/>
+    <Form 
+      OnAddItems={HandleAddItems}
+    />
+    <PackingList 
+      items={items} 
+      OnDeleteItem={HandleDeleteItem} 
+      OnToggleItem={HandleToggleItem}
+    />
     <Stats/>
   </div>
 )
@@ -50,7 +61,10 @@ function Form({OnAddItems})
   }
 
   return (
-  <form className="add-form" onSubmit={HandleSubmit}> 
+  <form 
+    className="add-form" 
+    onSubmit={HandleSubmit}
+  > 
     <h3> What do you need for your trip? </h3>
     <select 
       value={quantity}
@@ -73,28 +87,41 @@ function Form({OnAddItems})
   )
 }
 
-function PackingList({items, OnDeleteItem})
+function PackingList({items, OnDeleteItem, OnToggleItem})
 {
   return (
   <div className="list">
     <ul>
       {
         items.map(item => 
-        <Item item={item} OnDeleteItem={OnDeleteItem} key={item.id}/>
+        <Item 
+          item={item} 
+          OnDeleteItem={OnDeleteItem}
+          OnToggleItem={OnToggleItem}
+          key={item.id}/>
       )}
     </ul>
   </div>
   )
 }
 
-function Item({item, OnDeleteItem})
+function Item({item, OnDeleteItem, OnToggleItem})
 {
   return( 
   <li>
+    <input 
+      type="checkbox" 
+      value={item.packed} 
+      onChange={()=> OnToggleItem(item.id)}
+    />
     <span style={item.packed ? {textDecoration:"line-through"}:{}}> 
       {item.quantity} {item.description}
     </span> 
-    <button onClick={()=>OnDeleteItem(item.id)}>❌</button>
+    <button 
+      onClick={()=>OnDeleteItem(item.id)}
+    >
+      ❌
+    </button>
   </li>)
 }
 
