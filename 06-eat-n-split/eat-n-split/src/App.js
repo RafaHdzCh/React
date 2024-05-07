@@ -1,3 +1,4 @@
+
 const initialFriends = [
   {
     id: 118836,
@@ -25,7 +26,11 @@ export default function App()
     <div className="app">
       <div className="sidebar"> 
         <FriendsList />
+        <FormAddFriend />
+        <Button> ADD FRIEND </Button>
       </div>
+
+      <FormSplitBill />
     </div>
   )
 }
@@ -66,6 +71,51 @@ function Friend({friend})
       </p>
     }
 
-    <button className="button"> Select </button>
+    <Button> SELECT </Button>
   </li>);
+}
+
+function FormAddFriend()
+{
+  return (
+    <form className="form-add-friend">  
+      <label> Friend name </label>
+      <input type="text" />
+      <label> Image URL </label>
+      <input type="text" />
+
+      <Button> ADD </Button>
+    </form>
+  )
+}
+
+function Button({children})
+{
+  return <button className="button"> {children} </button>;
+}
+
+function FormSplitBill()
+{
+  return (
+  <form className="form-split-bill">
+    <h2> Split a bill with X</h2>
+
+    <label> Bill value </label>
+    <input type="text" />
+
+    <label> Your expenses </label>
+    <input type="text" />
+
+    <label> X's expense </label>
+    <input type="text" disabled />
+
+    <label> Who is paying the bill? </label>
+    <select> 
+      <option value="user"> You </option>
+      <option value="friend"> X </option>
+    </select>
+
+    <Button> SPLIT BILL </Button>
+  </form>
+  )
 }
