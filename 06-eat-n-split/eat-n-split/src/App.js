@@ -3,20 +3,20 @@ import { useState } from "react";
 const initialFriends = [
   {
     id: 118836,
-    name: "Clark",
-    image: "https://i.pravatar.cc/48?u=118836",
+    friendName: "Clark",
+    friendImage: "https://i.pravatar.cc/48?u=118836",
     balance: -7,
   },
   {
     id: 933372,
-    name: "Sarah",
-    image: "https://i.pravatar.cc/48?u=933372",
+    friendName: "Sarah",
+    friendImage: "https://i.pravatar.cc/48?u=933372",
     balance: 20,
   },
   {
     id: 499476,
-    name: "Anthony",
-    image: "https://i.pravatar.cc/48?u=499476",
+    friendName: "Anthony",
+    friendImage: "https://i.pravatar.cc/48?u=499476",
     balance: 0,
   },
 ];
@@ -106,24 +106,24 @@ function Friend({friend, OnSelection, selectedFriend})
 
   return (
   <li className={isSelected ? "selected" : ""}> 
-    <img src={friend.image} alt ={friend.name}/>
-    <h3>{friend.name}</h3>
+    <img src={friend.friendImage} alt ={friend.name}/>
+    <h3>{friend.friendName}</h3>
     {
       friend.balance < 0 && 
       <p className="red"> 
-        You owe {friend.name} ${Math.abs(friend.balance)}
+        You owe {friend.friendName} ${Math.abs(friend.balance)}
       </p>
     }
     {
       friend.balance > 0 && 
       <p className="green"> 
-        {friend.name} owes you ${Math.abs(friend.balance)}
+        {friend.friendName} owes you ${Math.abs(friend.balance)}
       </p>
     }
     {
       friend.balance === 0 && 
       <p> 
-        You and {friend.name} are even.
+        You and {friend.friendName} are even.
       </p>
     }
 
@@ -134,7 +134,7 @@ function Friend({friend, OnSelection, selectedFriend})
 function FormAddFriend({OnAddFriend})
 {
   const [friendName, SetFriendName] = useState("");
-  const [friendImage, SetFriendImage] = useState("https://i.pravatar.cc/48");
+  const [friendImage, SetFriendImage] = useState("https://i.pravatar.cc/48?u=");
 
   function HandleSubmit(event)
   {
@@ -206,7 +206,7 @@ function FormSplitBill({selectedFriend, OnSplitBill})
       onChange={event => SetPaidByUser(Number(event.target.value) > bill ? paidByUser : Number(event.target.value))}
     />
 
-    <label> {selectedFriend.name}'s expense </label>
+    <label> {selectedFriend.friendName}'s expense </label>
     <input 
       type="text" 
       value={paidByFriend} 
@@ -219,7 +219,7 @@ function FormSplitBill({selectedFriend, OnSplitBill})
       onChange={event => SetWhoIsPaying(event.target.value)}
     > 
       <option value="user"> You </option>
-      <option value="friend"> {selectedFriend.name} </option>
+      <option value="friend"> {selectedFriend.friendName} </option>
     </select>
 
     <Button> SPLIT BILL </Button>
