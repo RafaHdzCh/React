@@ -34,30 +34,47 @@ export default function App()
 
   return (
     <div>
-      <button className="close" onClick={()=>setIsOpen(is => !is)}>  &times; </button>
-      {
-        isOpen &&
-        (<div className="steps">
+      <button className="close" onClick={() => setIsOpen(is => !is)}> &times; </button>
+      {isOpen && (
+        <div className="steps">
           <div className="numbers">
             <div className={step === 1 ? "active" : ""}>1</div>
             <div className={step === 2 ? "active" : ""}>2</div>
             <div className={step === 3 ? "active" : ""}>3</div>
           </div>
-          <p className="message"> Step {step}: {messages[step-1]} </p>
+          <p className="message"> Step {step}: {messages[step - 1]} </p>
           <div className="buttons">
-            <button 
-              style={{backgroundColor: "#7950f2", color: "#fff"}} 
-              onClick={HandlePrevious}> 
-              Previous
-            </button>
-            <button 
-              style={{backgroundColor: "#7950f2", color: "#fff"}} 
-              onClick={HandleNext}> 
-              Next
-            </button>
+            <Button 
+              bgColor="#7950f2" 
+              textColor="#fff" 
+              onClick={HandlePrevious} 
+              text="<= Previous" 
+            />
+            <Button 
+              bgColor="#7950f2" 
+              textColor="#fff" 
+              onClick={HandleNext} 
+              text="Next =>" 
+            />
           </div>
-        </div>)
-      }   
+        </div>
+      )}
     </div>
-  )
+  );
+}
+
+function Button({ textColor, bgColor, onClick, text }) {
+  return (
+    <button 
+      style=
+      {
+        { backgroundColor: bgColor, 
+          color: textColor 
+        }
+      } 
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
 }
