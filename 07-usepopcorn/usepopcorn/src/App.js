@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const tempMovieData = [
   {
@@ -47,13 +47,29 @@ const tempWatchedData = [
   },
 ];
 
-const average = (arr) =>
-  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+const API_KEY = "f8dc2545";
+
+const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() 
 {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, SetMovies] = useState([]);
+  const [watched, SetWatched] = useState([]);
+  const [isLoading, SetIsLoading] = useState(false);
+  const query = "interstellar";
+
+  useEffect(function() 
+  {
+    async function FetchMovies()
+    {
+      SetIsLoading(true);
+      const response = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`)
+      const data = await response.json();
+      SetMovies(data.Search);
+      SetIsLoading(false);
+    }
+    FetchMovies();
+  }, []);
 
   return (
     <>
@@ -64,7 +80,8 @@ export default function App()
       </NavBar>
 
       <Main>
-        <Box element={<MovieList movies={movies}/>} />  
+        <Box element= {isLoading ? <Loader /> : <MovieList movies={movies} />}/> 
+
         <Box element=
         {
           <>
@@ -76,6 +93,11 @@ export default function App()
       </Main>
     </>
   );
+}
+
+function Loader()
+{
+  return <p className="loader"> Loading... </p>
 }
 
 function NavBar({children})
@@ -144,7 +166,7 @@ function MovieList({movies})
 {
   return(
     <ul className="list">
-      {movies?.map((movie) => <Movie movie={movie}/>)}
+      {movies?.map((movie) => <Movie movie={movie} key={movie.imdbID}/>)}
     </ul>
   )
 }
