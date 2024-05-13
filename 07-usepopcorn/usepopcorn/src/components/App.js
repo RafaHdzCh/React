@@ -15,11 +15,11 @@ export const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr
 
 export default function App() 
 {
+  const [error, SetError] = useState("");
   const [query, SetQuery] = useState("");
   const [movies, SetMovies] = useState([]);
   const [watched, SetWatched] = useState([]);
   const [isLoading, SetIsLoading] = useState(false);
-  const [error, SetError] = useState("");
   const [selectedId, SetSelectedID] = useState(null);
 
 /*
@@ -56,6 +56,8 @@ export default function App()
   {
     SetWatched(watched => watched.filter(movie => movie.imdbID !== id));
   }
+
+  
 
   useEffect(function()
   {

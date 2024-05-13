@@ -63,7 +63,24 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
     {
       document.title = "usePopcorn";
     }
-  }, [title])
+  }, [title]);
+
+  useEffect(function() 
+  {
+    function CallBack(event)
+    {
+      if(event.code === "Escape")
+      {
+        OnCloseMovie();
+      }
+    }
+    
+    document.addEventListener("keydown", CallBack);
+    return function()
+    {
+      document.removeEventListener("keydown", CallBack);
+    }
+  }, [OnCloseMovie]);
 
   return (
     <div className="details">
