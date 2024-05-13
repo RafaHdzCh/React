@@ -56,7 +56,7 @@ body {
   border-radius: 0.9rem;
   overflow: scroll;
   position: relative;
-  overflow: auto;
+  
 }
 
 .loader {
@@ -140,7 +140,7 @@ body {
   list-style: none;
   padding: 0.8rem 0;
   overflow: scroll;
-  overflow: auto;
+  
 }
 
 .list-watched {
@@ -340,6 +340,8 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.box::-webkit-scrollbar, .list::-webkit-scrollbar {   display: none;   scroll-behavior: smooth; }
 
 /*
 SPACING SYSTEM (px)
