@@ -57,9 +57,11 @@ export default function App()
     SetWatched(watched => watched.filter(movie => movie.imdbID !== id));
   }
 
-  useEffect(() => 
-    {
-    async function fetchData() 
+  useEffect(function()
+  {
+    const controller = new AbortController();
+
+    async function FetchData() 
     {
       if (!query) {
         SetMovies([]);
@@ -68,16 +70,30 @@ export default function App()
       }
 
       SetIsLoading(true);
-      try {
-        const data = await FetchMovies(query);
+      try 
+      {
+        const data = await FetchMovies(query,controller);
         SetMovies(data);
-      } catch (error) {
-        SetError(error.message);
-      } finally {
+        SetError("");
+      } 
+      catch (error) 
+      {
+        if(error.name !== "AbortError")
+        {
+          SetError(error.message);
+        }
+      } 
+      finally 
+      {
         SetIsLoading(false);
       }
     }
-    fetchData();
+    FetchData();
+
+    return function()
+    {
+      controller.abort();
+    }
   }, [query]);
 
   return (

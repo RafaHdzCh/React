@@ -96,7 +96,7 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
                 <p> You already rated this movie {watchedUserRating} stars. ⭐</p>}
             </div>
             <p><em>{plot}</em></p>
-            <p>Starring {actors}</p>
+            <p>Starring: {actors}</p>
             <p>Directed by {director}</p>
           </section>
         </>}
