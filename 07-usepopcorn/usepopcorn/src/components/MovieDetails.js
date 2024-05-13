@@ -57,7 +57,12 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
   useEffect(function() 
   {
     if(!title) return;
-    document.title = `MOVIE | ${title}`
+    document.title = `MOVIE | ${title}`;
+
+    return function()
+    {
+      document.title = "usePopcorn";
+    }
   }, [title])
 
   return (
