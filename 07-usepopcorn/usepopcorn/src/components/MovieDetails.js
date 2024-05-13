@@ -13,11 +13,18 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
   const watchedUserRating = watched.find(movie => movie.imdbID === selectedId)?.userRating;
 
   const
-    {
-      Title: title, Poster: poster, Year: year, Runtime: runtime, imdbRating, Plot: plot, Released: released, Actors: actors, Director: director, Genre: genre,
-    } = movie;
-
-
+  { 
+    Title: title,
+    Poster: poster, 
+    Year: year, 
+    Runtime: runtime, 
+    imdbRating, 
+    Plot: plot, 
+    Released: released, 
+    Actors: actors, 
+    Director: director, 
+    Genre: genre,
+  } = movie;
 
   function HandleAdd() 
   {
@@ -46,6 +53,12 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
     }
     GetMovieDetails();
   }, [selectedId]);
+
+  useEffect(function() 
+  {
+    if(!title) return;
+    document.title = `MOVIE | ${title}`
+  }, [title])
 
   return (
     <div className="details">
