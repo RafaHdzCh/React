@@ -1,40 +1,46 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
+
+function Reducer(state, Action)
+{
+  if(Action.type === "Increase") return state + 1;
+  if(Action.type === "Decrease") return state - 1;
+  if(Action.type === "DefineCount") return Action.payload;
+}
 
 function DateCounter() 
 {
-  const [count, setCount] = useState(0);
-  const [step, setStep] = useState(1);
+  //const [count, SetCount] = useState(0);
+  const [step, SetStep] = useState(1);
+  const [count, Dispatch] = useReducer(Reducer, 0)
 
   // This mutates the date object.
   const date = new Date("june 21 2027");
   date.setDate(date.getDate() + count);
 
-  const dec = function () 
+  const Decrease = function () 
   {
-    // setCount((count) => count - 1);
-    setCount((count) => count - step);
+    Dispatch({type: "Decrease"});
   };
 
-  const inc = function () 
+  const Increase = function () 
   {
-    // setCount((count) => count + 1);
-    setCount((count) => count + step);
+    Dispatch({type: "Increase"});
   };
 
-  const defineCount = function (e) 
+  const DefineCount = function (event) 
   {
-    setCount(Number(e.target.value));
+    Dispatch({type: "DefineCount", payload: Number(event.target.value)})
   };
 
-  const defineStep = function (e) 
+  const DefineStep = function (event) 
   {
-    setStep(Number(e.target.value));
+    SetStep(Number(event.target.value));
   };
 
-  const reset = function () 
+  const Reset = function () 
   {
-    setCount(0);
-    setStep(1);
+    //SetCount(0);
+    SetStep(1);
   };
 
   return (
@@ -45,21 +51,21 @@ function DateCounter()
           min="0"
           max="10"
           value={step}
-          onChange={defineStep}
+          onChange={DefineStep}
         />
         <span>{step}</span>
       </div>
 
       <div>
-        <button onClick={dec}>-</button>
-        <input value={count} onChange={defineCount} />
-        <button onClick={inc}>+</button>
+        <button onClick={Decrease}>-</button>
+        <input value={count} onChange={DefineCount} />
+        <button onClick={Increase}>+</button>
       </div>
 
       <p>{date.toDateString()}</p>
 
       <div>
-        <button onClick={reset}>Reset</button>
+        <button onClick={Reset}>Reset</button>
       </div>
     </div>
   );
