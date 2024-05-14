@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import StartScreen from "./StartScreen";
 import {useEffect, useReducer} from "react";
 import Question from "./Question";
+import NextButton from "./NextButton";
 
 const initialState = 
 {
@@ -37,14 +38,19 @@ function Reducer(state, Action)
               status: "ready"
             };
     case "NewAnswer": 
-      const currentQuestion = state.questions.at(state.index);
-      const isTheCorrectAnswer = Action.payload === currentQuestion.correctOption;
-      return{
+    const currentQuestion = state.questions[state.index];
+    const isTheCorrectAnswer = Action.payload === currentQuestion.correctOption;
+      return {
               ...state, 
               answer: Action.payload, 
               points: isTheCorrectAnswer ? state.points + currentQuestion.points : state.points
             };
-
+    case "NextQuestion":
+      return{
+              ...state,
+              index: state.index+1,
+              answer: null
+            }
     default: throw new Error("Action unknown.");
   }
 }
@@ -62,8 +68,6 @@ export default function App()
       .catch(error => Dispatch({type: "DataFailed"}));
   }, []);
 
-  console.log(status)
-
   return (
     <div className="app">
       <Header />
@@ -77,12 +81,17 @@ export default function App()
             Dispatch={Dispatch}
           />
         }
-        {status === "active" && 
-        <Question 
-          question={questions[index]}
-          Dispatch={Dispatch}
-          answer={answer}
-        />}
+        {
+          status === "active" && 
+          <>
+            <Question 
+              question={questions[index]}
+              Dispatch={Dispatch}
+              answer={answer}
+            />
+            <NextButton Dispatch={Dispatch} answer={answer}/>
+          </>
+        }
       </Main>
     </div>
   )
