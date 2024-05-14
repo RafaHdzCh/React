@@ -18,9 +18,13 @@ export default function App()
   const [error, SetError] = useState("");
   const [query, SetQuery] = useState("");
   const [movies, SetMovies] = useState([]);
-  const [watched, SetWatched] = useState([]);
   const [isLoading, SetIsLoading] = useState(false);
   const [selectedId, SetSelectedID] = useState(null);
+  const [watched, SetWatched] = useState(function() 
+  {
+    const storedValue = localStorage.getItem("watched");
+    return JSON.parse(storedValue);
+  });
 
 /*
   useEffect(function()
@@ -57,9 +61,12 @@ export default function App()
     SetWatched(watched => watched.filter(movie => movie.imdbID !== id));
   }
 
-  
+  useEffect(function SaveMovies()
+  {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched])
 
-  useEffect(function()
+  useEffect(function SearchAbortController()
   {
     const controller = new AbortController();
 
