@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { MovieDetails } from "./MovieDetails";
-import { NavBar, Logo, SearchBar, NumberOfResults } from "./NavBar";
+import { NavBar } from "./NavBar";
+import { NumberOfResults } from "./NumberOfResults";
+import { Logo } from "./Logo";
+import { SearchBar } from "./SearchBar";
 import { Loader } from "./Loader";
 import { ErrorMessage } from "./ErrorMessage";
 import { Box } from "./Box";
