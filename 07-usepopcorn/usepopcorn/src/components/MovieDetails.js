@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { API_KEY } from "./App";
 import { Loader } from "./Loader";
 
 export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watched }) 
 {
-  const [userRating, SetUserRating] = useState("");
   const [movie, SetMovie] = useState({});
+  const [userRating, SetUserRating] = useState("");
   const [isLoading, SetIsLoading] = useState(false);
+  
+  const countRef = useRef(0);
 
   const isWatched = watched.map(movie => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(movie => movie.imdbID === selectedId)?.userRating;
@@ -37,6 +39,7 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDecisions: countRef.current,
     };
     OnAddWatchedMovie(newWatchedMovie);
     OnCloseMovie();
@@ -81,6 +84,11 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
       document.removeEventListener("keydown", CallBack);
     }
   }, [OnCloseMovie]);
+
+  useEffect(function() 
+  {
+    if(userRating) countRef.current++;
+  },[userRating]);
 
   return (
     <div className="details">
