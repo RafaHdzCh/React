@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { API_KEY } from "./App";
 import { Loader } from "./Loader";
+import { useKey } from "../utils/useKey";
 
 export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watched }) 
 {
@@ -70,25 +71,10 @@ export function MovieDetails({ selectedId, OnCloseMovie, OnAddWatchedMovie, watc
 
   useEffect(function() 
   {
-    function CallBack(event)
-    {
-      if(event.code === "Escape")
-      {
-        OnCloseMovie();
-      }
-    }
-    
-    document.addEventListener("keydown", CallBack);
-    return function()
-    {
-      document.removeEventListener("keydown", CallBack);
-    }
-  }, [OnCloseMovie]);
-
-  useEffect(function() 
-  {
-    if(userRating) countRef.current++;
+    if(userRating) countRef.current = countRef.current+1;
   },[userRating]);
+
+  useKey("Escape", OnCloseMovie);
 
   return (
     <div className="details">

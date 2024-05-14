@@ -1,11 +1,11 @@
 import { Box } from "./Box";
 import { Logo } from "./Logo";
 import { Main } from "./Main";
+import { useState } from "react";
 import { NavBar } from "./NavBar";
 import { Loader } from "./Loader";
 import { SearchBar } from "./SearchBar";
 import { MovieList } from "./MovieList";
-import { useEffect, useState } from "react";
 import { ErrorMessage } from "./ErrorMessage";
 import { MovieDetails } from "./MovieDetails";
 import { useMovies } from "../utils/useMovies";
@@ -23,23 +23,23 @@ export default function App()
   const [selectedId, SetSelectedID] = useState(null);
   const [watched, SetWatched] = useLocalStorageState([], "watched");
   const {movies, isLoading, error} = useMovies(query);
-
   
-/*
-  useEffect(function()
-  {
-    console.log("After initial render")
-  }, [])
-  useEffect(function()
-  {
-    console.log("After every render")
-  })
-  useEffect(function()
-  {
-    console.log("On query")
-  }, [query])
-  console.log("During render")
-*/
+  /*
+    useEffect(function()
+    {
+      console.log("After initial render")
+    }, [])
+    useEffect(function()
+    {
+      console.log("After every render")
+    })
+    useEffect(function()
+    {
+      console.log("On query")
+    }, [query])
+    console.log("During render")
+  */
+ 
   function HandleSelectMovie(id)
   {
     SetSelectedID(selectedId => id === selectedId ? null : id);
