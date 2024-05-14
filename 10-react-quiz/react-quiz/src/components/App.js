@@ -12,22 +12,46 @@ const initialState =
   //loading, error, ready, active, finish
   status: "loading" ,
   index: 0,
+  answer: null,
+  points: 0
 };
 
 function Reducer(state, Action)
 {
   switch(Action.type)
   {
-    case "Start": return {...state, status:"active"};
-    case "DataFailed": return {...state, status: "error", };
-    case "DataReceived": return {...state, questions: Action.payload, status: "ready"};
+    case "Start": 
+      return{
+              ...state, 
+              status:"active"
+            };
+    case "DataFailed": 
+      return{
+              ...state, 
+              status: "error"
+            };
+    case "DataReceived": 
+      return{
+              ...state, 
+              questions: Action.payload, 
+              status: "ready"
+            };
+    case "NewAnswer": 
+      const currentQuestion = state.questions.at(state.index);
+      const isTheCorrectAnswer = Action.payload === currentQuestion.correctOption;
+      return{
+              ...state, 
+              answer: Action.payload, 
+              points: isTheCorrectAnswer ? state.points + currentQuestion.points : state.points
+            };
+
     default: throw new Error("Action unknown.");
   }
 }
 
 export default function App()
 {
-  const [{questions, status, index}, Dispatch] = useReducer(Reducer,initialState);
+  const [{questions, status, index, answer}, Dispatch] = useReducer(Reducer,initialState);
   const numberOfQuestions = questions.length;
 
   useEffect(function()
@@ -53,7 +77,12 @@ export default function App()
             Dispatch={Dispatch}
           />
         }
-        {status === "active" && <Question question={questions[index]}/>}
+        {status === "active" && 
+        <Question 
+          question={questions[index]}
+          Dispatch={Dispatch}
+          answer={answer}
+        />}
       </Main>
     </div>
   )
