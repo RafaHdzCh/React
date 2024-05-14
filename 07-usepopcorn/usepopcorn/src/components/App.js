@@ -1,34 +1,33 @@
-import { useEffect, useState } from "react";
-import { MovieDetails } from "./MovieDetails";
-import { NavBar } from "./NavBar";
-import { NumberOfResults } from "./NumberOfResults";
-import { Logo } from "./Logo";
-import { SearchBar } from "./SearchBar";
-import { Loader } from "./Loader";
-import { ErrorMessage } from "./ErrorMessage";
 import { Box } from "./Box";
+import { Logo } from "./Logo";
 import { Main } from "./Main";
+import { NavBar } from "./NavBar";
+import { Loader } from "./Loader";
+import { SearchBar } from "./SearchBar";
 import { MovieList } from "./MovieList";
+import { useEffect, useState } from "react";
+import { ErrorMessage } from "./ErrorMessage";
+import { MovieDetails } from "./MovieDetails";
+import { useMovies } from "../utils/useMovies";
 import { WatchedSummary } from "./WatchedSummary";
+import { NumberOfResults } from "./NumberOfResults";
 import { WatchedMoviesList } from "./WatchedMoviesList";
-import { FetchMovies } from "../utils/MovieAPI";
 
 export const API_KEY = "f8dc2545";
 export const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() 
 {
-  const [error, SetError] = useState("");
   const [query, SetQuery] = useState("");
-  const [movies, SetMovies] = useState([]);
-  const [isLoading, SetIsLoading] = useState(false);
   const [selectedId, SetSelectedID] = useState(null);
   const [watched, SetWatched] = useState(function() 
   {
     const storedValue = localStorage.getItem("watched");
     return JSON.parse(storedValue);
   });
+  const {movies, isLoading, error} = useMovies(query);
 
+  
 /*
   useEffect(function()
   {
@@ -68,45 +67,6 @@ export default function App()
   {
     localStorage.setItem("watched", JSON.stringify(watched));
   }, [watched])
-
-  useEffect(function SearchAbortController()
-  {
-    const controller = new AbortController();
-
-    async function FetchData() 
-    {
-      if (!query) {
-        SetMovies([]);
-        SetError("");
-        return;
-      }
-
-      SetIsLoading(true);
-      try 
-      {
-        const data = await FetchMovies(query,controller);
-        SetMovies(data);
-        SetError("");
-      } 
-      catch (error) 
-      {
-        if(error.name !== "AbortError")
-        {
-          SetError(error.message);
-        }
-      } 
-      finally 
-      {
-        SetIsLoading(false);
-      }
-    }
-    FetchData();
-
-    return function()
-    {
-      controller.abort();
-    }
-  }, [query]);
 
   return (
     <>
