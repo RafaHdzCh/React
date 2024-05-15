@@ -1,3 +1,4 @@
+import Login from "./pages/Login.jsx";
 import Product from "./pages/Product.jsx";
 import Pricing from "./pages/Pricing.jsx";
 import Homepage from "./pages/Homepage.jsx";
@@ -14,6 +15,7 @@ export default function App()
       <Route path="app" element={<AppLayout />}/>
       <Route path="product" element={<Product />}/>
       <Route path="pricing" element={<Pricing />}/>
+      <Route path="login" element={<Login />}/>
 
       <Route path="*" element={<PageNotFound />}/>
     </Routes>
