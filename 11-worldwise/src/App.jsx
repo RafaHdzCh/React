@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login.jsx";
+import Form from "./components/Form.jsx";
 import City from "./components/City.jsx";
 import Product from "./pages/Product.jsx";
 import Pricing from "./pages/Pricing.jsx";
@@ -41,11 +42,11 @@ export default function App()
       <Routes>
         <Route index element={<Homepage />} />
         <Route path="app" element={<AppLayout />}>
-          <Route index element={<p>LIST</p>} />
+          <Route index element={<Navigate replace to="cities"/>} />
           <Route path="cities" element={<CityList cities={cities} isLoading={isLoading} />} />
           <Route path="countries" element={<CountryList cities={cities} isLoading={isLoading} />} />
           <Route path="cities/:id" element={<City />} />
-          <Route path="form" element={<p>Form</p>} />
+          <Route path="form" element={<Form />} />
         </Route>
         <Route path="product" element={<Product />} />
         <Route path="pricing" element={<Pricing />} />
