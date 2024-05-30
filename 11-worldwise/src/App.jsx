@@ -12,8 +12,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { CitiesProvider } from "./context/CitiesContext.jsx";
 
 export default function App() 
-{
-  
+{  
   return (
     <CitiesProvider>
       <BrowserRouter>
