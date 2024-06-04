@@ -1,6 +1,8 @@
+import Button from "./Button";
 import styles from "./Map.module.css";
 import { useEffect, useState } from "react";
 import { useCities } from "../context/CitiesContext";
+import { useGeolocation } from "../hooks/useGeolocation";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
@@ -12,7 +14,8 @@ import markerIconRetina from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 // Configura el ícono del marcador
-const defaultIcon = L.icon({
+const defaultIcon = L.icon(
+{
   iconUrl: markerIcon,
   iconRetinaUrl: markerIconRetina,
   shadowUrl: markerShadow,
@@ -22,21 +25,40 @@ const defaultIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-export default function Map() {
+export default function Map() 
+{
   const { cities } = useCities();
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const [searchParams] = useSearchParams();
+  const 
+  {
+    isLoading: isLoadingPosition,
+    position: geolocationPosition, 
+    getPosition
+  } = useGeolocation();
+
   const mapLat = searchParams.get("lat");
   const mapLng = searchParams.get("lng");
 
-  useEffect(() => {
-    if (mapLat && mapLng) {
+  useEffect(() => 
+  {
+    if (mapLat && mapLng) 
+    {
       setMapPosition([parseFloat(mapLat), parseFloat(mapLng)]);
     }
   }, [mapLat, mapLng]);
 
+  useEffect(function() 
+  {
+    if(geolocationPosition)
+    {
+      setMapPosition([geolocationPosition.lng, geolocationPosition.lat]);
+    }
+  }, [geolocationPosition]);
+
   return (
     <div className={styles.mapContainer}>
+      {!geolocationPosition && <Button type="position" onClick={getPosition}>{isLoadingPosition ? "Loading..." : "Use your position"}</Button>}
       <MapContainer
         center={mapPosition}
         zoom={13}
@@ -66,13 +88,15 @@ export default function Map() {
   );
 }
 
-function ChangeCenter({ position }) {
+function ChangeCenter({ position }) 
+{
   const map = useMap();
   map.setView(position);
   return null;
 }
 
-function DetectClick() {
+function DetectClick() 
+{
   const navigate = useNavigate();
 
   useMapEvents(
