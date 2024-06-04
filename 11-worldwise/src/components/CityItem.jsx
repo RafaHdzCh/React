@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
+import { useCities } from "../context/CitiesContext";
 
 export default function CityItem({ city }) 
 {
@@ -13,6 +14,13 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
   const { cityName, emoji, date, id, position } = city;
+  const {deleteCity} = useCities();
+
+  function HandleClick(event)
+  {
+    event.preventDefault();
+    deleteCity(id);
+  }
 
   return (
     <li>
@@ -20,7 +28,7 @@ const formatDate = (date) =>
         <span className={styles.emoji}>{emoji}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button className={styles.deleteBtn} onClick={HandleClick}>&times;</button>
       </Link>
     </li>
   );

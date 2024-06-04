@@ -13,54 +13,6 @@
       "id": "73930385"
     },
     {
-      "cityName": "Madrid",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
-      "notes": "",
-      "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
-      },
-      "id": "17806751"
-    },
-    {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": "98443197"
-    },
-    {
-      "id": "e7d1",
-      "cityName": "Borriol",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2024-06-04T15:11:09.498Z",
-      "notes": "gfsgdf",
-      "position": {
-        "lat": "40.02827166956048",
-        "lng": "-0.10848999023437501"
-      }
-    },
-    {
-      "id": "79fd",
-      "cityName": "Borriol",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2024-06-04T15:11:09.498Z",
-      "notes": "gfsgdfdsgds",
-      "position": {
-        "lat": "40.0314262953692",
-        "lng": "-0.06248474121093751"
-      }
-    },
-    {
       "id": "203f",
       "cityName": "Guadalajara",
       "country": "Mexico",
