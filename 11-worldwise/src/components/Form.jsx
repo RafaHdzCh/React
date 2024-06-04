@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useUrlLocation } from "../hooks/useUrlPosition";
 import Message from "./Message";
 import Spinner from "./Spinner";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export function ConvertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -46,6 +48,8 @@ function Form()
 
   useEffect(function() 
   {
+    if(!lat && !lng) return;
+
     async function FetchCityData()
     {
       try
@@ -74,11 +78,17 @@ function Form()
     FetchCityData();
   }, [lat,lng]);
 
+  function HandleSubmit(event)
+  {
+    event.preventDefault();
+  }
+
   if(isLoadingGeolocation) return <Spinner />;
+  if(!lat && !lng) return <Message message="Start by clicking somewhere on the map" />
   if(geolocationError) return <Message message={geolocationError}/>;
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={HandleSubmit}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -91,11 +101,14 @@ function Form()
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
+        {
+        /*<input
           id="date"
           onChange={(e) => SetDate(e.target.value)}
           value={date}
-        />
+        />*/ 
+        }
+        <DatePicker onChange={date => SetDate(date)} selected={date} dateFormat="dd/MM/yyyy"/>
       </div>
 
       <div className={styles.row}>
