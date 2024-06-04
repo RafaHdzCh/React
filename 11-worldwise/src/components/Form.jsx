@@ -1,12 +1,15 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./Form.module.css";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import { useUrlLocation } from "../hooks/useUrlPosition";
+import Message from "./Message";
+import Spinner from "./Spinner";
 
-export function convertToEmoji(countryCode) {
+export function ConvertToEmoji(countryCode) {
   const codePoints = countryCode
     .toUpperCase()
     .split("")
@@ -14,13 +17,65 @@ export function convertToEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
-function Form() {
-const navigate = useNavigate();
+export function FlagEmojiToPNG(flag)
+{
+  const countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
+    .map(char => String.fromCharCode(char - 127397).toLowerCase())
+    .join("");
+  return(
+    <img src={`https://flagcdn.com/24x18/${countryCode}.png`} alt={flag}/>
+  )
+}
 
-  const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [notes, setNotes] = useState("");
+const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
+
+function Form() 
+{
+  const navigate = useNavigate();
+
+  const [lat, lng] = useUrlLocation();
+  const [cityName, SetCityName] = useState("");
+  const [country, SetCountry] = useState("");
+  const [date, SetDate] = useState(new Date());
+  const [notes, SetNotes] = useState("");
+  const [emoji, SetEmoji] = useState("");
+  const [isLoadingGeolocation, SetIsLoadingGeolocation] = useState(false);
+  const [geolocationError, SetGeolocationError] = useState("");
+
+
+
+  useEffect(function() 
+  {
+    async function FetchCityData()
+    {
+      try
+      {
+        SetIsLoadingGeolocation(true);
+        SetGeolocationError("");
+
+        const response = await fetch(`${BASE_URL}?latitude=${lat}&longitude=${lng}`)
+        const data = await response.json();
+        console.log(data);
+        if(!data.countryCode) throw new Error("That doesnt seem to be a city. Click somewhere else.")
+
+        SetCityName(data.city || data.locality || "");
+        SetCountry(data.countryName);
+        SetEmoji(ConvertToEmoji(data.countryCode));
+      }
+      catch(error)
+      {
+        SetGeolocationError(error.message);
+      }
+      finally
+      {
+        SetIsLoadingGeolocation(false)
+      }
+    }
+    FetchCityData();
+  }, [lat,lng]);
+
+  if(isLoadingGeolocation) return <Spinner />;
+  if(geolocationError) return <Message message={geolocationError}/>;
 
   return (
     <form className={styles.form}>
@@ -28,17 +83,17 @@ const navigate = useNavigate();
         <label htmlFor="cityName">City name</label>
         <input
           id="cityName"
-          onChange={(e) => setCityName(e.target.value)}
+          onChange={(e) => SetCityName(e.target.value)}
           value={cityName}
         />
-        {/* <span className={styles.flag}>{emoji}</span> */}
+        <span className={styles.flag}>{emoji && FlagEmojiToPNG(emoji)}</span>
       </div>
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
         <input
           id="date"
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => SetDate(e.target.value)}
           value={date}
         />
       </div>
@@ -47,7 +102,7 @@ const navigate = useNavigate();
         <label htmlFor="notes">Notes about your trip to {cityName}</label>
         <textarea
           id="notes"
-          onChange={(e) => setNotes(e.target.value)}
+          onChange={(e) => SetNotes(e.target.value)}
           value={notes}
         />
       </div>

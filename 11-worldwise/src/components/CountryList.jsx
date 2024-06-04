@@ -25,7 +25,7 @@ export default function CountryList()
 
   return (
     <ul className={styles.countryList}>
-      {countries.map(country => <CountryItem country={country}/>)}
+      {countries.map(country => <CountryItem country={country} key={Math.floor(Math.random() * 1000000)}/>)}
     </ul>
   );
 }

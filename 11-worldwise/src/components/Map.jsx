@@ -1,17 +1,19 @@
-import Button from "./Button";
-import styles from "./Map.module.css";
-import { useEffect, useState } from "react";
-import { useCities } from "../context/CitiesContext";
-import { useGeolocation } from "../hooks/useGeolocation";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-
 // Importa las imágenes para los íconos de los marcadores
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIconRetina from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+import L from "leaflet";
+import Button from "./Button";
+import "leaflet/dist/leaflet.css";
+import styles from "./Map.module.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCities } from "../context/CitiesContext";
+import { useGeolocation } from "../hooks/useGeolocation";
+import { useUrlLocation } from "../hooks/useUrlPosition";
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
+
 
 // Configura el ícono del marcador
 const defaultIcon = L.icon(
@@ -29,16 +31,15 @@ export default function Map()
 {
   const { cities } = useCities();
   const [mapPosition, setMapPosition] = useState([40, 0]);
-  const [searchParams] = useSearchParams();
+  
   const 
   {
     isLoading: isLoadingPosition,
     position: geolocationPosition, 
     getPosition
   } = useGeolocation();
-
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
+  const [mapLat, mapLng] = useUrlLocation()
+  
 
   useEffect(() => 
   {
