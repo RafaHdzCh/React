@@ -25,7 +25,7 @@ function AccountOperations() {
 
     dispatch(Deposit(depositAmount, currency));
     setDepositAmount("");
-    setCurrency("")
+    setCurrency(currency)
   }
 
   function handleWithdrawal() 
