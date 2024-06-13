@@ -15,15 +15,17 @@ function AccountOperations() {
   {
     loan: currentLoan, 
     loanPurpose: currentLoanPurpose, 
-    balance
+    balance,
+    isLoading,
   } = useSelector(store => store.account);
   
   function handleDeposit() 
   {
     if(!depositAmount) return;
 
-    dispatch(Deposit(depositAmount));
+    dispatch(Deposit(depositAmount, currency));
     setDepositAmount("");
+    setCurrency("")
   }
 
   function handleWithdrawal() 
@@ -68,7 +70,7 @@ function AccountOperations() {
             <option value="MXN">Mexican Peso</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit {depositAmount}</button>
+          <button onClick={handleDeposit} disabled={isLoading}> {isLoading ? "Converting..." : "Deposit"} </button>
         </div>
 
         <div>
