@@ -32,7 +32,7 @@ const fakeCart = [
   },
 ];
 
-function CreateOrder() {
+export default function CreateOrder() {
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -85,7 +85,25 @@ function CreateOrder() {
             name="cart" 
             value={JSON.stringify(cart)} 
           />
-          <button disabled={isSubmitting}> 
+          <button disabled={isSubmitting} className="
+          bg-yellow-400 
+          uppercase 
+          font-semibold 
+          text-stone-800 
+          px-4 
+          py-2 
+          inline-block 
+          tracking-wider 
+          rounded-full 
+          hover:bg-yellow-300 
+          transition-colors 
+          duration-300
+          focus:outline-none
+          focus:ring 
+          focus: ring-offset-1
+          focus:ring-yellow-300
+          disabled:cursor-not-allowed
+          "> 
             {isSubmitting ? "Placing order..." : "Order now"}
           </button>
         </div>
@@ -109,9 +127,7 @@ export async function Action({ request })
   if(!isValidPhone(order.phone)) errors.phone = "Please give us your correct phone number. We might need it to contact you."
   if(Object.keys(errors).length > 0) return errors;
 
-  const newOrder = await createOrder(order);
-
-  return redirect(`/order/${newOrder.id}`);
+  return null;
+  //const newOrder = await createOrder(order);
+  //return redirect(`/order/${newOrder.id}`);
 }
-
-export default CreateOrder;
