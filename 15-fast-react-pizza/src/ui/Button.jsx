@@ -24,7 +24,29 @@ export default function Button({children, disabled, to, type})
   const styles = 
   {
     primary: base + " px-4 py-2 md:px-6 md:py-4",
-    small: base + " px-4 py-2 md:px-5 md:py-2.5 text-xs"
+    small: base + " px-4 py-2 md:px-5 md:py-2.5 text-xs",
+    secondary:`
+                border-2
+                border-stone-500
+                disabled:cursor-not-allowed
+                duration-300
+                font-semibold 
+                focus:outline-none
+                focus:ring 
+                focus: ring-offset-1
+                focus:ring-stone-600
+                hover:bg-stone-600
+                hover:text-stone-200
+                inline-block 
+                md:px-6
+                md:py-4
+                px-4 py-2
+                rounded-full 
+                tracking-wider 
+                transition-colors 
+                text-stone-500
+                uppercase 
+              `
   }
 
   if(to) return <Link to={to} className={styles[type]}>{children}</Link>
