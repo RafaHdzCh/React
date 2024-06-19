@@ -6,7 +6,8 @@ import { ClearCart, GetCart } from "./cartSlice";
 import { GetUser } from "../user/userSlice";
 import EmptyCart from "./EmptyCart";
 
-function Cart() {
+function Cart() 
+{
   const cart = useSelector(GetCart);
   const username = useSelector(GetUser);
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function Cart() {
 
       <ul className="mt-3 divide-y divide-stone-200 border-b">
         {cart.map((item) => (
-          <CartItem item={item} key={item.key} />
+          <CartItem item={item} key={item.id} />
         ))}
       </ul>
 
