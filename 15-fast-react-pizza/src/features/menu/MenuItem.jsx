@@ -14,7 +14,6 @@ function MenuItem({ pizza })
 
   function HandleAddToCart()
   {
-    console.log(id);
     const newItem = 
       {
         pizzaId: id, 
