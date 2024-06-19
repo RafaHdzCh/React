@@ -1,3 +1,26 @@
+import {createSlice} from "@reduxjs/toolkit"
+
+const initialState = 
+{
+  username: "",
+}
+
+const userSlice = createSlice(
+{
+  name: "user",
+  initialState,
+  reducers:
+  {
+    UpdateName(state,action)
+    {
+      state.username = action.payload;
+    }
+  }
+})
+
+export const { UpdateName } = userSlice.actions;
+export default userSlice.reducer;
+
 /*
 
 function getPosition() {
@@ -23,26 +46,3 @@ async function fetchAddress() {
 }
 
 */
-
-import {createSlice} from "@reduxjs/toolkit"
-
-const initialState = 
-{
-  username: "RAFAEL",
-}
-
-const userSlice = createSlice(
-{
-  name: "user",
-  initialState,
-  reducers:
-  {
-    UpdateName(state,action)
-    {
-      state.username = action.payload;
-    }
-  }
-})
-
-export const { UpdateName } = userSlice.actions;
-export default userSlice.reducer;
