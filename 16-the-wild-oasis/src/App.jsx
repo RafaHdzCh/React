@@ -2,6 +2,7 @@ import Users from "./pages/Users";
 import Login from "./pages/Login";
 import Cabins from "./pages/Cabins";
 import Account from "./pages/Account";
+import Bookings from "./pages/Bookings";
 import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
 import PageNotFound from "./pages/PageNotFound";
@@ -21,6 +22,7 @@ export default function App()
             <Route path="users" element={<Users />}/>
             <Route path="cabins" element={<Cabins />}/>
             <Route path="account" element={<Account />}/>
+            <Route path="bookings" element={<Bookings />}/>
             <Route path="settings" element={<Settings />}/>
             <Route path="dashboard" element={<Dashboard />}/>
           </Route>

@@ -1,4 +1,7 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import * as ColorIcons from "react-icons/fc";
+//https://react-icons.github.io/react-icons/icons/fc/
 
 const NavList = styled.ul`
   display: flex;
@@ -6,7 +9,7 @@ const NavList = styled.ul`
   gap: 0.8rem;
 `;
 
-const Link = styled.a`
+const StyledNavLink = styled(NavLink)`
   &:link,
   &:visited {
     display: flex;
@@ -44,3 +47,49 @@ const Link = styled.a`
     color: var(--color-brand-600);
   }
 `;
+
+export default function MainNav()
+{
+  return (
+  <nav>
+    <NavList>
+
+      <li>
+        <StyledNavLink to="/dashboard">
+        <ColorIcons.FcHome  />
+          <span>Home</span>
+        </StyledNavLink>
+      </li>
+
+      <li>
+        <StyledNavLink to="/bookings">
+        <ColorIcons.FcCalendar  />
+          <span>Booking</span>
+        </StyledNavLink>
+      </li>
+      
+      <li>
+        <StyledNavLink to="/cabins">
+        <ColorIcons.FcFilingCabinet  />
+          <span>Cabins</span>
+        </StyledNavLink>
+      </li>
+      
+      <li>
+        <StyledNavLink to="/users">
+        <ColorIcons.FcConferenceCall   />
+          <span>Users</span>
+        </StyledNavLink>
+      </li>
+
+      <li>
+        <StyledNavLink to="/settings">
+        <ColorIcons.FcSettings   />
+          <span>Settings</span>
+        </StyledNavLink>
+      </li>
+
+    </NavList>
+  </nav>
+  )
+}
