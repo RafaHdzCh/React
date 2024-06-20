@@ -1,36 +1,31 @@
-import Heading from "./ui/Heading";
-import Input from "./ui/Input";
-import Row from "./ui/Row";
-import Button from "./ui/Button";
-import StyledApp from "./ui/StyledApp";
-import GlobalStyles from "./styles/GlobalStyles"
+import Users from "./pages/Users";
+import Login from "./pages/Login";
+import Cabins from "./pages/Cabins";
+import Account from "./pages/Account";
+import Settings from "./pages/Settings";
+import Dashboard from "./pages/Dashboard";
+import PageNotFound from "./pages/PageNotFound";
+import GlobalStyles from "./styles/GlobalStyles";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 export default function App() 
 {
   return (
     <>
       <GlobalStyles />
-      <StyledApp>
-        <Row type="vertical">
-          <Row type="horizontal">
-            <Heading as="h1"> The Wild Oasis </Heading>
-            <div>
-              <Button variation="primary" size="medium">Check in</Button>   
-              <Button variation="secondary" size="small">Check out</Button>
-            </div>
-          </Row>
+      <BrowserRouter>
+        <Routes>
+          <Route path="users" element={<Users />}/>
+          <Route path="login" element={<Login />}/>
+          <Route path="cabins" element={<Cabins />}/>
+          <Route path="account" element={<Account />}/>
+          <Route path="settings" element={<Settings />}/>
+          <Route path="dashboard" element={<Dashboard />}/>
 
-          <Row type="vertical">
-            <Heading as="h2"> Forms </Heading>
-            <form>
-              <Input type="number" placeholder="number of guests" />
-              <Input type="number" placeholder="number of guests" />
-            </form>
-          </Row>
-
-          <Heading as="h3"> Page </Heading>
-        </Row>
-      </StyledApp>
+          <Route path="*" element={<PageNotFound />}/>
+          <Route index element={<Navigate replace to="dashboard" />}/>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
