@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import PageNotFound from "./pages/PageNotFound";
 import GlobalStyles from "./styles/GlobalStyles";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import AppLayout from "./ui/AppLayout";
 
 export default function App() 
 {
@@ -15,15 +16,17 @@ export default function App()
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route path="users" element={<Users />}/>
-          <Route path="login" element={<Login />}/>
-          <Route path="cabins" element={<Cabins />}/>
-          <Route path="account" element={<Account />}/>
-          <Route path="settings" element={<Settings />}/>
-          <Route path="dashboard" element={<Dashboard />}/>
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate replace to="dashboard" />}/>
+            <Route path="users" element={<Users />}/>
+            <Route path="cabins" element={<Cabins />}/>
+            <Route path="account" element={<Account />}/>
+            <Route path="settings" element={<Settings />}/>
+            <Route path="dashboard" element={<Dashboard />}/>
+          </Route>
 
+          <Route path="login" element={<Login />}/>
           <Route path="*" element={<PageNotFound />}/>
-          <Route index element={<Navigate replace to="dashboard" />}/>
         </Routes>
       </BrowserRouter>
     </>
