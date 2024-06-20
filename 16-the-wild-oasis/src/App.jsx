@@ -1,5 +1,6 @@
 import Heading from "./ui/Heading";
 import Input from "./ui/Input";
+import Row from "./ui/Row";
 import Button from "./ui/Button";
 import StyledApp from "./ui/StyledApp";
 import GlobalStyles from "./styles/GlobalStyles"
@@ -10,14 +11,25 @@ export default function App()
     <>
       <GlobalStyles />
       <StyledApp>
-        <Heading as="h1"> The Wild Oasis </Heading>
-        <Button>Check in</Button>
-        <Button>Check out</Button>
+        <Row type="vertical">
+          <Row type="horizontal">
+            <Heading as="h1"> The Wild Oasis </Heading>
+            <div>
+              <Button variation="primary" size="medium">Check in</Button>   
+              <Button variation="secondary" size="small">Check out</Button>
+            </div>
+          </Row>
 
-        <Heading as="h2"> Inputs </Heading>
-        <Input type="number" placeholder="number of guests" />
-      
-        <Heading as="h3"> Page </Heading>
+          <Row type="vertical">
+            <Heading as="h2"> Forms </Heading>
+            <form>
+              <Input type="number" placeholder="number of guests" />
+              <Input type="number" placeholder="number of guests" />
+            </form>
+          </Row>
+
+          <Heading as="h3"> Page </Heading>
+        </Row>
       </StyledApp>
     </>
   )
