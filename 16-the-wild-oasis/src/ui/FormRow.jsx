@@ -36,7 +36,6 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-
 export default function FormRow({label, error, children})
 {
   return(

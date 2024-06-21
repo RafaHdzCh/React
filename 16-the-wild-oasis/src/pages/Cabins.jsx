@@ -5,7 +5,7 @@ import Button from "../ui/Button";
 import { useState } from "react";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
 
-function Cabins() 
+export default function Cabins() 
 {
   const [showForm, SetShowForm] = useState(false)
 
@@ -22,5 +22,3 @@ function Cabins()
     </>
   );
 }
-
-export default Cabins;

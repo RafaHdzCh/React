@@ -29,11 +29,12 @@ export default function CreateCabinForm()
 
   function OnSubmit(data)
   {
-    mutate(data)
+    mutate({...data, image: data.image[0]})
   }
+
   function OnError(errors)
   {
-    console.log(errors)
+    //console.log(errors)
   }
 
   return (
@@ -120,6 +121,13 @@ export default function CreateCabinForm()
         <FileInput 
           id="image"
           accept="image/*"
+          type="file"
+          {
+            ...register("image", 
+            {
+              required: "This field is required"
+            })
+          }
         />
       </FormRow>
 
@@ -130,7 +138,7 @@ export default function CreateCabinForm()
         </Button>
         <Button disabled={isLoading}>Add cabin</Button>
       </FormRow>
-      
+
     </Form>
   );
 }
