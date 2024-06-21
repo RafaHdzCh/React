@@ -21,7 +21,7 @@ export default function CreateCabinForm()
     onSuccess: () =>
     {
       toast.success("New cabin created");
-      queryClient.invalidateQueries({queryKey:["cabins"]});
+      queryClient.invalidateQueries({queryKey:["cabin"]});
       reset();
     },
     onError: (error) => toast.error(error.message)
