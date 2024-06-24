@@ -1,12 +1,10 @@
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function CreateEditCabin(newCabin, id) 
-{
+export async function CreateEditCabin(newCabin, id) {
   let imagePath = newCabin.image;
 
-  // Manejar la imagen solo si es un archivo
-  if (newCabin.image && newCabin.image instanceof File) 
-  {
+  // Verificar si la imagen es un archivo y manejarla
+  if (newCabin.image && newCabin.image instanceof File) {
     const imageName = `${Math.random() * 10}-${newCabin.image.name}`.replaceAll("/", "");
     imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
@@ -14,14 +12,11 @@ export async function CreateEditCabin(newCabin, id)
       .from("cabin-images")
       .upload(imageName, newCabin.image);
 
-    if (storageError) 
-    {
+    if (storageError) {
       console.error(storageError);
       throw new Error("Cabin image could not be uploaded");
     }
-  } 
-  else if (id) 
-  {
+  } else if (!newCabin.image && id) {
     // Obtener la imagen actual si no se proporciona una nueva
     const { data: existingCabin, error: fetchError } = await supabase
       .from("cabins")
@@ -29,8 +24,7 @@ export async function CreateEditCabin(newCabin, id)
       .eq("id", id)
       .single();
     
-    if (fetchError) 
-    {
+    if (fetchError) {
       console.error(fetchError);
       throw new Error("Error fetching existing cabin data");
     }
@@ -41,7 +35,7 @@ export async function CreateEditCabin(newCabin, id)
   // Crear o actualizar la cabaña
   let query = supabase.from("cabins");
   if (!id) 
-  {
+    {
     query = query.insert([{ ...newCabin, image: imagePath }]);
   } 
   else 
@@ -60,6 +54,7 @@ export async function CreateEditCabin(newCabin, id)
 
   return data;
 }
+
 
 
 export async function GetCabins() 

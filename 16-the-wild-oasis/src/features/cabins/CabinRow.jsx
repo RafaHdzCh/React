@@ -1,9 +1,10 @@
-import CreateCabinForm from "./CreateCabinForm";
+import React, { useState } from "react";
+import styled from "styled-components";
+import * as ColorIcons from "react-icons/fc";
+import { useCreateCabin } from "./useCreateCabin";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { formatCurrency } from "../../utils/helpers";
-
-import { useState } from "react";
-import styled from "styled-components";
+import CreateCabinForm from "./CreateCabinForm";
 
 const TableRow = styled.div`
   display: grid;
@@ -46,37 +47,48 @@ const Discount = styled.div`
 
 export default function CabinRow({ cabin }) 
 {
-  const [showForm, SetShowForm] = useState(false);
-  const {isDeleting, DeleteCabin} = useDeleteCabin();
-  const { id: cabinId, name, maxCapacity, regularPrice, discount, image } = cabin;
+  const [showForm, setShowForm] = useState(false);
+  const { isDeleting, DeleteCabin } = useDeleteCabin();
+  const { isLoading, CreateOrEditCabin } = useCreateCabin();
+  const { id: cabinId, name, maxCapacity, regularPrice, discount, image, description } = cabin;
+
+  function handleDuplicate() 
+  {
+    CreateOrEditCabin(
+    {
+      newCabinData: 
+      {
+        name: `Copy of ${name}`,
+        maxCapacity,
+        regularPrice,
+        discount,
+        image,
+        description
+      }
+    });
+  }
 
   return (
     <>
       <TableRow role="row">
-
-        <Img src={image} />
-
+        <Img src={image} alt="Cabin" />
         <Cabin>{name}</Cabin>
-
         <div>Fit up to {maxCapacity} guests</div>
-
         <Price>{formatCurrency(regularPrice)}</Price>
-
         {discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
-
         <div>
-
-        <button onClick={()=>SetShowForm(show=>!show)} disabled={isDeleting}>
-          Edit
-        </button>
-        <button onClick={() => DeleteCabin(cabinId)} disabled={isDeleting}>
-          Delete
-        </button>
-        
+          <button onClick={handleDuplicate}>
+            <ColorIcons.FcDocument />
+          </button>
+          <button onClick={() => setShowForm(show => !show)} disabled={isDeleting}>
+            <ColorIcons.FcEditImage />
+          </button>
+          <button onClick={() => DeleteCabin(cabinId)} disabled={isDeleting}>
+            <ColorIcons.FcEmptyTrash />
+          </button>
         </div>
-
       </TableRow>
-      {showForm && <CreateCabinForm cabinToEdit={cabin}/>}
+      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
     </>
   );
 }
