@@ -4,11 +4,11 @@ import Button from "../../ui/Button";
 import FormRow from "../../ui/FormRow";
 import Textarea from "../../ui/Textarea";
 import FileInput from "../../ui/FileInput";
-
-import {useForm} from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
 
-export default function CreateCabinForm({ cabinToEdit = {} }) 
+import {useForm} from "react-hook-form";
+
+export default function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) 
 {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
@@ -39,14 +39,26 @@ export default function CreateCabinForm({ cabinToEdit = {} })
           newCabinData, 
           id: editId 
         }, 
-        {onSuccess: () => reset()}
+        { 
+          onSuccess: () => 
+          {
+            reset();
+            onCloseModal?.();
+          }
+        }
       );
     }
     else
     { 
       CreateOrEditCabin(
         { newCabinData }, 
-        {onSuccess: () => reset()}
+        { 
+          onSuccess: () => 
+          {
+            reset();
+            onCloseModal?.();
+          }
+        }
       );
     }
   }
@@ -57,7 +69,7 @@ export default function CreateCabinForm({ cabinToEdit = {} })
   }
 
   return (
-    <Form onSubmit={handleSubmit(OnSubmit, OnError)}>
+    <Form onSubmit={handleSubmit(OnSubmit, OnError)} type={onCloseModal ? "modal" : "regular"}>
 
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input 
@@ -152,7 +164,7 @@ export default function CreateCabinForm({ cabinToEdit = {} })
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={() => onCloseModal?.()}>
           Cancel
         </Button>
         <Button disabled={isLoading}>{isEditSession ? "Edit" : "Create"}</Button>
