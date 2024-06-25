@@ -67,22 +67,31 @@ export default function CabinRow({ cabin })
         <Price>{formatCurrency(regularPrice)}</Price>
         {discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
         <div>
-          <button onClick={handleDuplicate}>
-            <ColorIcons.FcDocument />
-          </button>
-          <button onClick={() => setShowForm(show => !show)} disabled={isDeleting}>
-            <ColorIcons.FcEditImage />
-          </button>
-          <button onClick={() => DeleteCabin(cabinId)} disabled={isDeleting}>
-            <ColorIcons.FcEmptyTrash />
-          </button>
-
           <Menus.Menu>
             <Menus.Toggle id={cabinId}/>
             <Menus.List id={cabinId}>
-              <Menus.Button>Duplicate</Menus.Button>
-              <Menus.Button>Edit</Menus.Button>
-              <Menus.Button>Delete</Menus.Button>
+
+              <Menus.Button 
+                icon={<ColorIcons.FcDocument />}
+                onClick={handleDuplicate}
+              >
+                Duplicate
+              </Menus.Button>
+              <Menus.Button 
+                icon={<ColorIcons.FcEditImage />}
+                onClick={() => setShowForm(show => !show)} 
+                disabled={isDeleting}
+              >
+                Edit
+              </Menus.Button>
+              <Menus.Button 
+                icon={<ColorIcons.FcEmptyTrash />}
+                onClick={() => DeleteCabin(cabinId)} 
+                disabled={isDeleting}
+              >
+                Delete
+              </Menus.Button>
+
             </Menus.List>
           </Menus.Menu>
         </div>
