@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import {createPortal} from "react-dom"
+import {createPortal} from "react-dom";
+import { cloneElement, createContext, useContext, useState } from "react";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -50,19 +51,47 @@ const Button = styled.button`
   }
 `;
 
-export default function Modal({children, onClose})
+const ModalContext = createContext();
+
+export default function Modal({children})
 {
+  const [openName, SetOpenName] = useState("")
+  
+  const close = () => SetOpenName("");
+  const open = (name) => SetOpenName(name);
+
+  return(
+    <ModalContext.Provider value={{openName, close, open}}>
+      {children}
+    </ModalContext.Provider>
+  )
+}
+
+function Open({opens: opensWindowName, renderButton})
+{
+  const {open} = useContext(ModalContext);
+  return renderButton(() => open(opensWindowName));
+}
+
+function Window({children, name})
+{
+  const {openName, close} = useContext(ModalContext)
+  if(name !== openName) return null;
+
   return createPortal (
   <Overlay>
     <StyledModal>
-      <Button onClick={onClose}> 
+      <Button onClick={close}> 
         ❌  
       </Button>
       <div>
-        {children}
+        {cloneElement(children, {onCloseModal: close})}
       </div>
     </StyledModal>
   </Overlay>,
   document.body
   )
 }
+
+Modal.Open = Open;
+Modal.Window = Window;
