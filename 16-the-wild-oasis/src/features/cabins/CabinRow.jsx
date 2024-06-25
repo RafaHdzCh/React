@@ -6,6 +6,7 @@ import { useDeleteCabin } from "./useDeleteCabin";
 import { formatCurrency } from "../../utils/helpers";
 import CreateCabinForm from "./CreateCabinForm";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
 const Img = styled.img`
   display: block;
@@ -75,6 +76,15 @@ export default function CabinRow({ cabin })
           <button onClick={() => DeleteCabin(cabinId)} disabled={isDeleting}>
             <ColorIcons.FcEmptyTrash />
           </button>
+
+          <Menus.Menu>
+            <Menus.Toggle id={cabinId}/>
+            <Menus.List id={cabinId}>
+              <Menus.Button>Duplicate</Menus.Button>
+              <Menus.Button>Edit</Menus.Button>
+              <Menus.Button>Delete</Menus.Button>
+            </Menus.List>
+          </Menus.Menu>
         </div>
       </Table.Row>
 

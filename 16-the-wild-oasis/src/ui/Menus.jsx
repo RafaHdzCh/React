@@ -1,6 +1,10 @@
+import { createContext, useContext, useState } from "react";
 import styled from "styled-components";
+import * as ColorIcons from "react-icons/fc";
+import { createPortal } from 'react-dom';
 
-const StyledMenu = styled.div`
+
+const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -27,11 +31,9 @@ const StyledToggle = styled.button`
 
 const StyledList = styled.ul`
   position: fixed;
-
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
-
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
 `;
@@ -44,7 +46,6 @@ const StyledButton = styled.button`
   padding: 1.2rem 2.4rem;
   font-size: 1.4rem;
   transition: all 0.2s;
-
   display: flex;
   align-items: center;
   gap: 1.6rem;
@@ -60,3 +61,59 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
 `;
+
+const MenusContext = createContext();
+
+export default function Menus({ children }) {
+  const [openId, setOpenId] = useState("");
+  const close = () => setOpenId("");
+  const open = (name) => setOpenId(name);
+
+  return (
+    <MenusContext.Provider value={{ openId, open, close }}>
+      {children}
+    </MenusContext.Provider>
+  );
+}
+
+function Toggle({ id }) {
+  const { openId, close, open } = useContext(MenusContext);
+
+  function HandleClick() {
+    openId === "" || openId !== id ? open(id) : close();
+  }
+
+  return (
+    <StyledToggle onClick={HandleClick}>
+      <ColorIcons.FcMenu />
+    </StyledToggle>
+  );
+}
+
+function List({ id, children }) {
+  const { openId } = useContext(MenusContext);
+
+  if (openId !== id) return null;
+
+  return createPortal(
+    <StyledList position={{ x: 20, y: 20 }}>
+      {children}
+    </StyledList>,
+    document.body
+  );
+}
+
+function Button({ children }) {
+  return (
+    <li>
+      <StyledButton>
+        {children}
+      </StyledButton>
+    </li>
+  );
+}
+
+Menus.Menu = Menu;
+Menus.Toggle = Toggle;
+Menus.List = List;
+Menus.Button = Button;
