@@ -7,7 +7,6 @@ import FileInput from "../../ui/FileInput";
 import { useCreateCabin } from "./useCreateCabin";
 
 import {useForm} from "react-hook-form";
-
 export default function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) 
 {
   const { id: editId, ...editValues } = cabinToEdit;
@@ -23,7 +22,7 @@ export default function CreateCabinForm({ cabinToEdit = {}, onCloseModal })
   {
     let newCabinData = { ...data };
 
-    if (data.image && data.image.length > 0) 
+    if (data.image[0] && data.image[0] !== "h") 
     {
       newCabinData.image = data.image[0];
     } 
@@ -62,6 +61,14 @@ export default function CreateCabinForm({ cabinToEdit = {}, onCloseModal })
       );
     }
   }
+
+  function OnCancel()
+  {
+    console.log("resetting modal")
+    reset();
+    onCloseModal?.();
+  }
+  
 
   function OnError(errors) 
   {
@@ -164,7 +171,7 @@ export default function CreateCabinForm({ cabinToEdit = {}, onCloseModal })
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset" onClick={() => onCloseModal?.()}>
+        <Button variation="secondary" type="reset" onClick={() => OnCancel()}>
           Cancel
         </Button>
         <Button disabled={isLoading}>{isEditSession ? "Edit" : "Create"}</Button>
