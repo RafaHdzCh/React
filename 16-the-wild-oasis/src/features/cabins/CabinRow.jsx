@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { formatCurrency } from "../../utils/helpers";
-import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import * as ColorIcons from "react-icons/fc";
 import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
@@ -74,6 +74,15 @@ function CabinRow({ cabin }) {
     });
   }
 
+  function handleDelete() 
+  {
+    deleteCabin(cabinId, 
+    {
+      onSuccess: () => console.log("Cabin deleted successfully"),
+      onError: (err) => console.error("Error deleting cabin:", err),
+    });
+  }
+
   return (
     <Table.Row>
       <Img src={image} />
@@ -91,16 +100,16 @@ function CabinRow({ cabin }) {
             <Menus.Toggle id={cabinId} />
 
             <Menus.List id={cabinId}>
-              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+              <Menus.Button icon={<ColorIcons.FcDocument  />} onClick={handleDuplicate}>
                 Duplicate
               </Menus.Button>
 
               <Modal.Open opens="edit">
-                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+                <Menus.Button icon={<ColorIcons.FcEditImage  />}>Edit</Menus.Button>
               </Modal.Open>
 
               <Modal.Open opens="delete">
-                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+                <Menus.Button icon={<ColorIcons.FcFullTrash  />}>Delete</Menus.Button>
               </Modal.Open>
             </Menus.List>
 
@@ -112,7 +121,7 @@ function CabinRow({ cabin }) {
               <ConfirmDelete
                 resourceName="cabins"
                 disabled={isDeleting}
-                onConfirm={() => deleteCabin(cabinId)}
+                onConfirm={handleDelete}
               />
             </Modal.Window>
           </Menus.Menu>
