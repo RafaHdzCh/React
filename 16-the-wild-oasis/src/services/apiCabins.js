@@ -1,6 +1,6 @@
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function CreateEditCabin(newCabin, id) {
+export async function createEditCabin(newCabin, id) {
   let imagePath = newCabin.image;
 
   // Verificar si la imagen es un archivo y manejarla
@@ -57,7 +57,7 @@ export async function CreateEditCabin(newCabin, id) {
 
 
 
-export async function GetCabins() 
+export async function getCabins() 
 {
   let { data, error } = await supabase.from('cabins').select('*');
 
@@ -70,7 +70,7 @@ export async function GetCabins()
   return data;
 }
 
-export async function DeleteCabin(id) 
+export async function deleteCabin(id) 
 {
   const { data, error } = await supabase
     .from('cabins')
