@@ -49,7 +49,8 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-function CabinRow({ cabin }) {
+function CabinRow({ cabin }) 
+{
   const { isDeleting, deleteCabin } = useDeleteCabin();
   const { isCreating, createCabin } = useCreateCabin();
 
@@ -63,7 +64,8 @@ function CabinRow({ cabin }) {
     description,
   } = cabin;
 
-  function handleDuplicate() {
+  function handleDuplicate() 
+  {
     createCabin({
       name: `Copy of ${name}`,
       maxCapacity,

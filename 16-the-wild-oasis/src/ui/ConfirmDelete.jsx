@@ -8,19 +8,22 @@ const StyledConfirmDelete = styled.div`
   flex-direction: column;
   gap: 1.2rem;
 
-  & p {
+  & p 
+  {
     color: var(--color-grey-500);
     margin-bottom: 1.2rem;
   }
 
-  & div {
+  & div 
+  {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 1.2rem;
   }
 `;
 
-function ConfirmDelete({ resourceName, onConfirm, disabled }) {
+function ConfirmDelete({ resourceName, onConfirm, disabled }) 
+{
   return (
     <StyledConfirmDelete>
       <Heading as="h3">Delete {resourceName}</Heading>
@@ -30,9 +33,6 @@ function ConfirmDelete({ resourceName, onConfirm, disabled }) {
       </p>
 
       <div>
-        <Button variation="secondary" disabled={disabled}>
-          Cancel
-        </Button>
         <Button 
           variation="danger" 
           disabled={disabled}
