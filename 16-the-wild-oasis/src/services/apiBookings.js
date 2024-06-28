@@ -3,7 +3,8 @@ import { PAGE_SIZE } from "../utils/constants";
 
 import supabase from "./supabase";
 
-export async function getBookings({ filter, sortBy, page }) {
+export async function getBookings({ filter, sortBy, page }) 
+{
   let query = supabase
     .from("bookings")
     .select(
@@ -20,7 +21,8 @@ export async function getBookings({ filter, sortBy, page }) {
       ascending: sortBy.direction === "asc",
     });
 
-  if (page) {
+  if (page) 
+    {
     const from = (page - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
     query = query.range(from, to);
@@ -28,7 +30,8 @@ export async function getBookings({ filter, sortBy, page }) {
 
   const { data, error, count } = await query;
 
-  if (error) {
+  if (error) 
+  {
     console.error(error);
     throw new Error("Bookings could not be loaded");
   }
@@ -72,7 +75,8 @@ export async function getBookingsAfterDate(date)
 }
 
 // Returns all STAYS that are were created after the given date
-export async function getStaysAfterDate(date) {
+export async function getStaysAfterDate(date) 
+{
   const { data, error } = await supabase
     .from("bookings")
     // .select('*')
@@ -89,7 +93,8 @@ export async function getStaysAfterDate(date) {
 }
 
 // Activity means that there is a check in or a check out today
-export async function getStaysTodayActivity() {
+export async function getStaysTodayActivity() 
+{
   const { data, error } = await supabase
     .from("bookings")
     .select("*, guests(fullName, nationality, countryFlag)")
@@ -109,7 +114,8 @@ export async function getStaysTodayActivity() {
   return data;
 }
 
-export async function updateBooking(id, obj) {
+export async function updateBooking(id, obj) 
+{
   const { data, error } = await supabase
     .from("bookings")
     .update(obj)
@@ -124,7 +130,8 @@ export async function updateBooking(id, obj) {
   return data;
 }
 
-export async function deleteBooking(id) {
+export async function deleteBooking(id) 
+{
   // REMEMBER RLS POLICIES
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 

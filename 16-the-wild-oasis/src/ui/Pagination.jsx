@@ -1,7 +1,8 @@
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-import { useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { PAGE_SIZE } from "../utils/constants";
+
+import styled from "styled-components";
+import * as ColorIcons from "react-icons/fc";
+import { useSearchParams } from "react-router-dom";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -40,11 +41,13 @@ const PaginationButton = styled.button`
   padding: 0.6rem 1.2rem;
   transition: all 0.3s;
 
-  &:has(span:last-child) {
+  &:has(span:last-child) 
+  {
     padding-left: 0.4rem;
   }
 
-  &:has(span:first-child) {
+  &:has(span:first-child) 
+  {
     padding-right: 0.4rem;
   }
 
@@ -53,13 +56,15 @@ const PaginationButton = styled.button`
     width: 1.8rem;
   }
 
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled) 
+  {
     background-color: var(--color-brand-600);
     color: var(--color-brand-50);
   }
 `;
 
-function Pagination({ count }) {
+function Pagination({ count }) 
+{
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("page")
     ? 1
@@ -67,14 +72,16 @@ function Pagination({ count }) {
 
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
-  function nextPage() {
+  function nextPage() 
+  {
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
 
     searchParams.set("page", next);
     setSearchParams(searchParams);
   }
 
-  function prevPage() {
+  function prevPage() 
+  {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
 
     searchParams.set("page", prev);
@@ -95,7 +102,7 @@ function Pagination({ count }) {
 
       <Buttons>
         <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-          <HiChevronLeft /> <span>Previous</span>
+          <ColorIcons.FcPrevious /> <span>Previous</span>
         </PaginationButton>
 
         <PaginationButton
@@ -103,7 +110,7 @@ function Pagination({ count }) {
           disabled={currentPage === pageCount}
         >
           <span>Next</span>
-          <HiChevronRight />
+          <ColorIcons.FcNext />
         </PaginationButton>
       </Buttons>
     </StyledPagination>
