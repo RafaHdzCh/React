@@ -90,9 +90,15 @@ function BookingRow(
       <Menus.Menu>
         <Menus.Toggle id={bookingId} />
         <Menus.List id={bookingId}>
-          <Menus.Button icon={<ColorIcons.FcAbout />} onClick={() => navigate(`/bookings/${bookingId}`)}>
+          <Menus.Button icon={<ColorIcons.FcRules />} onClick={() => navigate(`/bookings/${bookingId}`)}>
             See details
           </Menus.Button>
+          {
+            status === "unconfirmed" && 
+            <Menus.Button icon={<ColorIcons.FcReading />} onClick={() => navigate(`/checkin/${bookingId}`)}>
+              Check in
+            </Menus.Button>
+          }
         </Menus.List>
       </Menus.Menu>
     </Table.Row>
