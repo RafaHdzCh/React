@@ -11,6 +11,7 @@ import { useMoveBack } from "../../hooks/useMoveBack";
 import styled from "styled-components";
 import { useBooking } from "./useBooking";
 import { useNavigate } from "react-router-dom";
+import { useCheckout } from "../check-in-out/useCheckout.js";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() 
 {
+  const {checkout, isChekingout} = useCheckout();
   const { booking = {}, isLoading } = useBooking();
   const {status, id} = booking;
 
@@ -51,9 +53,18 @@ function BookingDetail()
           Back
         </Button>
         {
-            status === "unconfirmed" && 
-            <Button onClick={() => navigate(`/checkin/${id}`)}>
-              Check in
+          status === "unconfirmed" && 
+          <Button onClick={() => navigate(`/checkin/${id}`)}>
+            Check in
+          </Button>
+        }
+        {
+            status === "checked-in" && 
+            <Button 
+              onClick={() => checkout(id)}
+              disabled={isChekingout}
+            >
+              Check out
             </Button>
           }
       </ButtonGroup>

@@ -9,6 +9,7 @@ import Menus from "../../ui/Menus";
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { useCheckout } from "../check-in-out/useCheckout.js";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -55,6 +56,8 @@ function BookingRow(
 })
 {
   const navigate = useNavigate();
+  const {checkout, isChekingout} = useCheckout();
+
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
@@ -90,13 +93,29 @@ function BookingRow(
       <Menus.Menu>
         <Menus.Toggle id={bookingId} />
         <Menus.List id={bookingId}>
-          <Menus.Button icon={<ColorIcons.FcRules />} onClick={() => navigate(`/bookings/${bookingId}`)}>
+          <Menus.Button 
+            icon={<ColorIcons.FcRules />} 
+            onClick={() => navigate(`/bookings/${bookingId}`)}
+          >
             See details
           </Menus.Button>
           {
             status === "unconfirmed" && 
-            <Menus.Button icon={<ColorIcons.FcReading />} onClick={() => navigate(`/checkin/${bookingId}`)}>
+            <Menus.Button 
+              icon={<ColorIcons.FcBusiness />} 
+              onClick={() => navigate(`/checkin/${bookingId}`)}
+            >
               Check in
+            </Menus.Button>
+          }
+          {
+            status === "checked-in" && 
+            <Menus.Button 
+              icon={<ColorIcons.FcLeave />} 
+              onClick={() => checkout(bookingId)}
+              disabled={isChekingout}
+            >
+              Check out
             </Menus.Button>
           }
         </Menus.List>
