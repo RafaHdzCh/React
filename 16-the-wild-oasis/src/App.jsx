@@ -15,6 +15,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Checkin from "./pages/Checkin";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 const queryClient = new QueryClient(
 {
@@ -53,7 +54,7 @@ export default function App()
       />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route element={<ProtectedRoute> <AppLayout /> </ProtectedRoute>}>
             <Route index element={<Navigate replace to="dashboard" />}/>
             <Route path="users" element={<Users />}/>
             <Route path="cabins" element={<Cabins />}/>
