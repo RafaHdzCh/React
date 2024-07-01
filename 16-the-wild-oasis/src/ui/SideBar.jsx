@@ -19,7 +19,8 @@ export default function SideBar()
     <StyledSidebar>
       <Logo />
       <MainNav />
-      <Uploader />
     </StyledSidebar>
   )
 }
+
+//USE <Uploader /> TO IMPORT DATA

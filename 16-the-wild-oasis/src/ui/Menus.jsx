@@ -70,7 +70,7 @@ const MenusContext = createContext();
 
 
 
-export default function Menus({ children }) 
+function Menus({ children }) 
 {
   const [openId, setOpenId] = useState("");
   const [position, SetPosition] = useState(null);
@@ -90,6 +90,8 @@ function Toggle({ id })
 
   function HandleClick(event) 
   {
+    event.stopPropagation();
+
     const rect = event.target.closest("button").getBoundingClientRect();
     SetPosition(
       {
@@ -110,7 +112,7 @@ function Toggle({ id })
 function List({ id, children }) 
 {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick(close, false);
 
   if (openId !== id) return null;
 
@@ -145,3 +147,5 @@ Menus.Menu = Menu;
 Menus.Toggle = Toggle;
 Menus.List = List;
 Menus.Button = Button;
+
+export default Menus;

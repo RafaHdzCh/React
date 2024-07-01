@@ -24,10 +24,10 @@ export default function HeaderMenu()
       </ButtonIcon>
     </li>
     <li>
-      <Logout />
+      <DarkModeToggle />
     </li>
     <li>
-      <DarkModeToggle />
+      <Logout />
     </li>
   </StyledHeaderMenu>
   );
