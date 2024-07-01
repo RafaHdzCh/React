@@ -4,6 +4,7 @@ import Logout from "../features/authentication/Logout";
 import styled from "styled-components";
 import * as ColorIcons from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "./DarkModeToggle";
 
 
 const StyledHeaderMenu = styled.ul`
@@ -24,6 +25,9 @@ export default function HeaderMenu()
     </li>
     <li>
       <Logout />
+    </li>
+    <li>
+      <DarkModeToggle />
     </li>
   </StyledHeaderMenu>
   );
